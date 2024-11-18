@@ -159,6 +159,22 @@ public class JVMClassInfo extends ClassInfo {
     }
     private void objectMethodsBootstrap(ClassFile cf, Object tag, int idx, int refKind, String cls, String mth, String parameters, String descriptor, int[] cpArgs){
       //-----
+      System.out.println("This (objectMethodsBootstrap from JVMClassInfo) Method was Called : JVMClassInfo");
+      System.out.println("ClassFile cf.className = " + cf.className + ", \nObject tag = " + tag + ", \nint idx = " + idx + ", \nint refKind = " + refKind + ", \nString cls = " + cls + ", \nString mth = " + mth + ", \nString parameters = " + parameters + ", \nString descriptor = " + descriptor);
+
+      String clsName = cls;
+      ClassInfo enclosingLambdaCls;
+      if(!clsName.equals(JVMClassInfo.this.getName())) {
+        enclosingLambdaCls = ClassLoaderInfo.getCurrentResolvedClassInfo(clsName);
+      } else {
+        enclosingLambdaCls = JVMClassInfo.this;
+      }
+      assert (enclosingLambdaCls!=null);
+
+      String bmArg = cf.getBmArgString(cpArgs[0]);
+
+      setBootstrapMethodInfo(enclosingLambdaCls, mth, parameters, idx, refKind, descriptor, bmArg,
+              BootstrapMethodInfo.BMType.RECORDS_O);
     }
     private void stringConcatenation(ClassFile cf, int idx, int refKind, String cls, String mth, String parameters, String descriptor, int[] cpArgs){
       String clsName = cls;

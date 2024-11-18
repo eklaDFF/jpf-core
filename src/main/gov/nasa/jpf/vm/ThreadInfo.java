@@ -1240,6 +1240,7 @@ public class ThreadInfo extends InfoObject
   
   public ClassInfo resolveReferencedClass (String clsName){
     ClassInfo ciTop = top.getClassInfo();
+      System.out.println("resolveReferenceClass() called" + Thread.currentThread().getName());
     return ciTop.resolveReferencedClass(clsName);
             
     //return ClassLoaderInfo.getCurrentClassLoader(this).getResolvedClassInfo(clsName);

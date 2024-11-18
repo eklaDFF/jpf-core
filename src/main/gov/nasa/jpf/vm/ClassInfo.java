@@ -2480,11 +2480,12 @@ public class ClassInfo extends InfoObject implements Iterable<MethodInfo>, Gener
     if(ci != null) {
       return ci;
     }
- 
+    System.out.println("here" + Thread.currentThread().getName());
     // The defining class loader of the class initiate the load of referenced classes
     ci = classLoader.loadClass(cname);
+    System.out.println("here2" + Thread.currentThread().getName());
     classLoader.addResolvedClass(ci);
-
+    System.out.println("here3" + Thread.currentThread().getName());
     return ci;
   }
 

@@ -93,16 +93,18 @@ public class INVOKEDYNAMIC extends Instruction {
    */
   @Override
   public Instruction execute (ThreadInfo ti) {
+    System.out.println("-------------------------------------------------------------- INVOKEDYNAMIC.execute()");
     StackFrame frame = ti.getModifiableTopFrame();
-    
+    System.out.println("98");
     ElementInfo ei = ti.getHeap().get(funcObjRef);
-    
+    System.out.println("99");
     if(ei==null || ei!=lastFuncObj || freeVariableTypes.length>0) {
       ClassInfo fiClassInfo;
 
       // First, resolve the functional interface
       try {
         fiClassInfo = ti.resolveReferencedClass(functionalInterfaceName);
+        System.out.println("100");
       } catch(LoadOnJPFRequired lre) {
         return ti.getPC();
       }
@@ -110,7 +112,7 @@ public class INVOKEDYNAMIC extends Instruction {
       if (fiClassInfo.initializeClass(ti)) {
         return ti.getPC();
       }
-      
+
       ClassInfo enclosingClass = this.getMethodInfo().getClassInfo();
       
       BootstrapMethodInfo bmi = enclosingClass.getBootstrapMethodInfo(bootstrapMethodIndex);

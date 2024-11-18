@@ -17,6 +17,15 @@
  */
 package gov.nasa.jpf.vm;
 
+import gov.nasa.jpf.Config;
+import gov.nasa.jpf.JPF;
+import gov.nasa.jpf.JPFException;
+import gov.nasa.jpf.SystemAttribute;
+import gov.nasa.jpf.jvm.JRTClassFileContainer;
+import gov.nasa.jpf.util.JPFLogger;
+import gov.nasa.jpf.util.SparseIntVector;
+import gov.nasa.jpf.util.StringSetMatcher;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -26,15 +35,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
-
-import gov.nasa.jpf.Config;
-import gov.nasa.jpf.JPF;
-import gov.nasa.jpf.JPFException;
-import gov.nasa.jpf.SystemAttribute;
-import gov.nasa.jpf.jvm.JRTClassFileContainer;
-import gov.nasa.jpf.util.JPFLogger;
-import gov.nasa.jpf.util.SparseIntVector;
-import gov.nasa.jpf.util.StringSetMatcher;
 
 /**
  * @author Nastaran Shafiei <nastaran.shafiei@gmail.com>
@@ -517,6 +517,7 @@ public class ClassLoaderInfo
 
   // it acquires the resolvedClassInfo by executing the class loader loadClass() method
   public ClassInfo loadClass(String cname) {
+    System.out.println("PPPPPPPP : ClassLoaderInfo.loadClass(String cname = " + cname + ")");
     ClassInfo ci = null;
     if(roundTripRequired) {
       // loadClass bytecode needs to be executed by the JPF vm
@@ -531,6 +532,7 @@ public class ClassLoaderInfo
   }
 
   protected ClassInfo loadClassOnJVM(String cname) {
+    System.out.println("ClassLoaderInfo.loadClassOnJVM(String cname = " + cname + ")");
     String className = Types.getClassNameFromTypeName(cname);
     // Check if the given class is already resolved by this loader
     ClassInfo ci = getAlreadyResolvedClassInfo(className);
